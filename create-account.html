@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Account</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.form-card{
+max-width:450px;
+margin:30px auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+text-align:center;
+}
+
+.logo{
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:10px;
+}
+
+.form-card h2{
+color:green;
+margin-bottom:20px;
+}
+
+.form-card input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+.form-card button{
+width:100%;
+margin-top:12px;
+}
+
+.links{
+margin-top:15px;
+}
+
+.links a{
+text-decoration:none;
+font-weight:bold;
+display:block;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+<header>
+
+<img src="log.jpg">
+
+<div class="header-text">
+
+<h1>
+THE CONQUERORS SAVINGS SACCO
+</h1>
+
+<h3>
+SAVE TOGETHER, GROW TOGETHER
+</h3>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="form-card">
+
+<img src="log.jpg" class="logo">
+
+<h2>Create Account</h2>
+
+<input
+type="text"
+id="firstName"
+placeholder="First Name">
+
+<input
+type="text"
+id="secondName"
+placeholder="Second Name">
+
+<input
+type="text"
+id="phone"
+placeholder="Phone Number">
+
+<input
+type="text"
+id="newUsername"
+placeholder="Username">
+
+<input
+type="password"
+id="newPassword"
+placeholder="Password">
+
+
+<button
+type="button"
+onclick="togglePassword()">
+SHOW/HIDE PASSWORD
+</button>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password">
+
+<button
+type="button"
+onclick="toggleConfirmPassword()">
+SHOW/HIDE CONFIRM PASSWORD
+</button>
+
+<button onclick="createAccount()">
+CREATE ACCOUNT
+</button>
+
+<div class="links">
+
+<a href="user-login.html">
+Already have an account? Login
+</a>
+
+<a href="login.html">
+← Back
+</a>
+
+</div>
+</div>
+</div>
+<div class="info-card">
+
+<div id="liveClock"></div>
+
+<hr>
+
+<div id="todayHistory">
+Loading today's historical event...
+</div>
+</div>
+</div>
+
+</div>
+
+<a href="help.html" class="help-btn">
+❓
+</a>
+
+<footer>
+
+All Rights Reserved @
+The Conquerors Savings Sacco
+
+<br>
+
+tcss2026@gmail.com
+
+</footer>
+<script type="module" src="script.js"></script>
+
+<script>
+
+function togglePassword(){
+
+    let password =
+    document.getElementById("newPassword");
+
+    if(!password){
+        console.log("newPassword field not found");
+        return;
+    }
+
+    password.type =
+    password.type === "password"
+    ? "text"
+    : "password";
+}
+function toggleConfirmPassword(){
+
+let password =
+document.getElementById(
+"confirmPassword"
+);
+
+if(password.type === "password"){
+
+password.type = "text";
+
+}else{
+
+password.type = "password";
+
+}
+
+}
+
+function createAccount(){
+
+let firstName =
+document.getElementById("firstName").value;
+
+let secondName =
+document.getElementById("secondName").value;
+
+let phone =
+document.getElementById("phone").value;
+
+let username =
+document.getElementById("newUsername").value;
+
+let password =
+document.getElementById("newPassword").value;
+
+let confirm =
+document.getElementById("confirmPassword").value;
+
+if(
+firstName === "" ||
+secondName === "" ||
+phone === "" ||
+username === "" ||
+password === ""
+){
+alert("Fill all fields");
+return;
+}
+
+if(password !== confirm){
+alert("Passwords do not match");
+return;
+}
+
+let users =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+let exists =
+users.find(
+u => u.username === username
+);
+
+if(exists){
+alert("Username already exists");
+return;
+}
+
+users.push({
+
+firstName:firstName,
+secondName:secondName,
+phone:phone,
+username:username,
+password:password,
+role:"user",
+created:new Date().toLocaleString()
+
+});
+
+localStorage.setItem(
+"users",
+JSON.stringify(users)
+);
+
+alert(
+"Account Created Successfully"
+);
+
+setTimeout(function(){
+
+window.location.href =
+"user-login.html";
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>

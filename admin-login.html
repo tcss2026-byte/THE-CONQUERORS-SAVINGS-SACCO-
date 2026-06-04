@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.login-card{
+max-width:400px;
+margin:40px auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+text-align:center;
+}
+
+.login-card h2{
+margin-bottom:20px;
+color:green;
+}
+
+.login-card input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+.login-card button{
+width:100%;
+margin-top:15px;
+}
+
+.logo{
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<img src="log.jpg">
+
+<div class="header-text">
+
+<h1>
+THE CONQUERORS SAVINGS SACCO
+</h1>
+
+<h3>
+SAVE TOGETHER, GROW TOGETHER
+</h3>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="login-card">
+
+<img src="log.jpg" class="logo">
+
+<h2>Admin Login</h2>
+
+<input
+type="email"
+id="adminUsername"
+placeholder="Admin Email">
+
+<input
+type="password"
+id="adminPassword"
+placeholder="Password">
+<button onclick="adminLogin()">
+LOGIN
+</button>
+
+<br><br>
+
+<a href="login.html">
+← Back
+</a>
+
+</div>
+
+<div class="info-card">
+
+<div id="liveClock"></div>
+
+<hr>
+
+<div id="todayHistory">
+Loading today's historical event...
+</div>
+
+</div>
+
+
+<a href="help.html" class="help-btn">
+❓
+</a>
+<footer>
+
+All Rights Reserved @
+The Conquerors Savings Sacco
+
+<br>
+
+tcss2026@gmail.com
+
+</footer>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

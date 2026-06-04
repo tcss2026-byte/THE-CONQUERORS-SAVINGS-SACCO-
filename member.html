@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Member Management</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+#membersList{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.item{
+text-align:center;
+}
+
+.member-photo{
+width:400%;
+max-width:270px;
+height:270px;
+object-fit:cover;
+display:block;
+margin:0 auto 15px;
+border:2px solid #333;
+border-radius:5px;
+box-shadow:0 2px 5px rgba(0,0,0,.2);
+}
+
+.section{
+background:white;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+box-shadow:0 0 5px rgba(0,0,0,.2);
+}
+
+.item{
+padding:12px;
+margin-top:10px;
+border-left:5px solid green;
+background:#f9f9f9;
+border-radius:8px;
+}
+
+.actions{
+margin-top:10px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.actions button,
+.actions a{
+flex:1;
+}
+
+.hidden{
+display:none;
+}
+
+.search-box{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+<img src="log.jpg">
+
+<div class="header-text">
+
+<h1>
+THE CONQUERORS SAVINGS SACCO
+</h1>
+
+<h3>
+SAVE TOGETHER, GROW TOGETHER
+</h3>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<a href="dashboard.html" class="btn back">
+BACK TO DASHBOARD
+</a>
+
+<div id="adminOnly">
+
+<div class="section">
+
+<h2>Membership Applications</h2>
+
+<div id="applicationsList">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Search Members</h2>
+
+<input
+type="text"
+id="searchBox"
+class="search-box"
+placeholder="Search by Name, Phone or Member ID"
+onkeyup="searchMembers()">
+
+</div>
+
+<div class="section">
+
+<h2>Approved Members</h2>
+
+<div id="membersList">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+<a href="help.html" class="help-btn">
+❓
+</a>
+
+<footer>
+
+All Rights Reserved @ The Conquerors Savings Sacco
+
+<br>
+
+tcss2026@gmail.com
+
+</footer>
+
+<script type="module" src="script.js"></script>
+
+<script type="module">
+    
+    import { db } from "./firebase.js";
+
+import {
+approveMembership,
+rejectMembership
+}
+from "./script.js";
+
+import {
+collection,
+getDocs,
+query,
+where,
+doc,
+deleteDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+function loadMemberPage(){
+
+let role =
+localStorage.getItem(
+"currentRole"
+);
+
+if(role !== "admin"){
+
+document.getElementById(
+"adminOnly"
+).style.display = "none";
+
+}
+
+loadApplications();
+
+displayMembers();
+
+}
+
+async function loadApplications(){
+
+let role = localStorage.getItem("currentRole");
+
+if(role !== "admin") return;
+
+const snapshot = await getDocs(
+collection(db,"membershipRequests")
+);
+
+let output = "";
+
+if(snapshot.empty){
+
+output = "<p>No pending applications.</p>";
+
+}else{
+
+snapshot.forEach((doc)=>{
+
+const req = doc.data();
+
+output += `
+
+<div class="item">
+
+<p><strong>Username:</strong> ${req.username}</p>
+
+<p><strong>Date:</strong> ${req.date}</p>
+
+<div class="actions">
+
+<button onclick="approveUser('${req.username}')">
+APPROVE
+</button>
+
+<button onclick="rejectUser('${req.username}')">
+REJECT
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+document.getElementById("applicationsList").innerHTML = output;
+
+}
+async function approveUser(username){
+
+await approveMembership(username);
+
+await loadApplications();
+
+await displayMembers();
+
+}
+
+async function rejectUser(username){
+
+await rejectMembership(username);
+
+await loadApplications();
+
+}
+async function displayMembers(){
+
+const snapshot = await getDocs(
+collection(db,"members")
+);
+
+let output = "";
+
+if(snapshot.empty){
+
+output = "<p>No members found.</p>";
+
+}else{
+
+snapshot.forEach((doc)=>{
+
+const member = doc.data();
+
+output += `
+
+<div class="item">
+
+<img src="${member.profilePicture}" class="member-photo">
+<p>
+<strong>Name:</strong>
+${member.firstName}
+${member.secondName}
+</p>
+
+<p>
+<strong>Member ID:</strong>
+${member.id}
+</p>
+
+<p>
+<strong>Phone:</strong>
+${member.phone}
+</p>
+
+<p>
+<strong>Balance:</strong>
+UGX ${member.balance}
+</p>
+
+<div class="actions">
+
+<button onclick="openProfile('${member.id}')">
+PROFILE
+</button>
+
+<button onclick="deleteMember('${member.username}','${member.id}')">
+DELETE
+</button>
+
+</div>
+
+</div>
+
+`;
+});
+
+}
+
+document.getElementById("membersList").innerHTML = output;
+
+}
+
+async function searchMembers(){
+
+let search =
+document.getElementById("searchBox")
+.value.toLowerCase();
+
+const snapshot = await getDocs(
+collection(db,"members")
+);
+
+let output = "";
+
+snapshot.forEach((doc)=>{
+
+const member = doc.data();
+
+if(
+member.firstName.toLowerCase().includes(search) ||
+member.secondName.toLowerCase().includes(search) ||
+member.phone.includes(search) ||
+member.id.toLowerCase().includes(search)
+){
+
+output += `
+<div class="item">
+
+<p><strong>Name:</strong>
+${member.firstName} ${member.secondName}
+</p>
+
+<p><strong>Member ID:</strong>
+${member.id}
+</p>
+
+<p><strong>Phone:</strong>
+${member.phone}
+</p>
+
+<p><strong>Balance:</strong>
+UGX ${member.balance}
+</p>
+
+</div>
+`;
+
+}
+
+});
+
+document.getElementById(
+"membersList"
+).innerHTML = output;
+
+}
+function openProfile(id){
+
+localStorage.setItem(
+"selectedMember",
+id
+);
+
+window.location.href =
+"profile.html";
+
+}
+
+async function deleteMember(username, memberID) {
+
+    if(localStorage.getItem("currentRole") !== "admin"){
+        alert("Only Admin can delete members");
+        return;
+    }
+
+    if(!confirm("Permanently delete this member?")){
+        return;
+    }
+
+    const memberQuery = query(
+        collection(db,"members"),
+        where("username","==",username)
+    );
+
+    const memberSnap = await getDocs(memberQuery);
+
+    for(const docItem of memberSnap.docs){
+        await deleteDoc(docItem.ref);
+    }
+
+    const userQuery = query(
+        collection(db,"users"),
+        where("username","==",username)
+    );
+
+    const userSnap = await getDocs(userQuery);
+
+    for(const docItem of userSnap.docs){
+        await deleteDoc(docItem.ref);
+    }
+
+    const requestQuery = query(
+        collection(db,"membershipRequests"),
+        where("username","==",username)
+    );
+
+    const requestSnap = await getDocs(requestQuery);
+
+    for(const docItem of requestSnap.docs){
+        await deleteDoc(docItem.ref);
+    }
+
+    const transactionQuery = query(
+        collection(db,"transactions"),
+        where("memberID","==",memberID)
+    );
+
+    const transactionSnap = await getDocs(transactionQuery);
+
+    for(const docItem of transactionSnap.docs){
+        await deleteDoc(docItem.ref);
+    }
+
+    alert("Member permanently deleted");
+
+    displayMembers();
+}
+
+window.deleteMember = deleteMember;
+window.approveUser = approveUser;
+window.rejectUser = rejectUser;
+window.openProfile = openProfile;
+window.deleteMember = deleteMember;
+window.searchMembers = searchMembers;
+window.loadMemberPage = loadMemberPage;
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadMemberPage
+);
+
+</script>
+</body>
+</html>

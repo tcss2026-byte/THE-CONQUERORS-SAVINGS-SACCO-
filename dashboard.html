@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.status-box{
+background:white;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+box-shadow:0 0 5px rgba(0,0,0,.2);
+}
+
+.big-number{
+font-size:28px;
+font-weight:bold;
+color:green;
+text-align:center;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+<img src="log.jpg">
+
+<div class="header-text">
+
+<h1>
+THE CONQUERORS SAVINGS SACCO
+</h1>
+
+<h3>
+SAVE TOGETHER, GROW TOGETHER
+</h3>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="card">
+
+<h2>Welcome</h2>
+
+<p id="welcomeText">
+Loading...
+</p>
+
+</div>
+
+<div class="status-box">
+
+<h2>Membership Status</h2>
+
+<p id="membershipStatus">
+Checking...
+</p>
+
+<button
+id="applyBtn"
+class="btn"
+onclick="applyForMembership()">
+
+APPLY FOR MEMBERSHIP
+
+</button>
+
+</div>
+
+<div class="status-box">
+
+<h2>Total Members</h2>
+
+<div
+id="totalMembers"
+class="big-number">
+
+0
+
+</div>
+
+</div>
+
+<div class="status-box">
+
+<h2>Total SACCO Savings</h2>
+
+<div
+id="totalSavings"
+class="big-number">
+
+UGX 0
+
+</div>
+
+</div>
+
+<div
+id="memberSection"
+class="status-box hidden">
+
+<h2>My Profile</h2>
+
+<p>
+Role:
+<b>Active Member</b>
+</p>
+
+<p>
+Member ID:
+<span id="memberID"></span>
+</p>
+
+<p>
+Balance:
+UGX
+<span id="memberBalance"></span>
+</p>
+
+<a
+href="profile.html"
+class="btn">
+
+VIEW PROFILE
+
+</a>
+
+</div>
+<div
+id="adminSection"
+class="status-box hidden">
+
+<h2>Administrator Panel</h2>
+
+<p>
+You have full SACCO management access.
+</p>
+
+<a
+href="member.html"
+class="btn">
+
+MANAGE MEMBERS
+
+</a>
+
+</div>
+<button
+class="btn back"
+onclick="logout()">
+
+LOGOUT
+
+</button>
+
+</div>
+
+
+<a href="help.html" class="help-btn">
+❓
+</a>
+<footer>
+
+All Rights Reserved @ The Conquerors Savings Sacco
+
+<br>
+
+tcss2026@gmail.com
+
+</footer>
+
+<script type="module" src="script.js"></script>
+
+<script type="module">
+    import { db } from "./firebase.js";
+
+import {
+collection,
+getDocs,
+query,
+where
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+
+async function loadDashboard(){
+
+    document.getElementById("adminSection").style.display = "none";
+    document.getElementById("memberSection").style.display = "none";
+
+    let username = localStorage.getItem("currentUser");
+    let role = localStorage.getItem("currentRole");
+
+    document.getElementById("welcomeText").innerHTML =
+    "Hello, " + username;
+
+    // LOAD MEMBERS FROM FIREBASE
+    const membersSnapshot =
+    await getDocs(collection(db,"members"));
+
+    let members = [];
+
+    membersSnapshot.forEach((doc)=>{
+        members.push(doc.data());
+    });
+
+    // TOTAL MEMBERS
+    document.getElementById("totalMembers").innerHTML =
+    members.length;
+
+    // TOTAL SAVINGS
+    let totalSavings = 0;
+
+    members.forEach(member=>{
+        totalSavings += Number(member.balance || 0);
+    });
+
+    document.getElementById("totalSavings").innerHTML =
+    "UGX " + totalSavings.toLocaleString();
+// ADMIN DASHBOARD
+if(role === "admin"){
+
+    document.getElementById("welcomeText").innerHTML =
+    "👋 Hello Administrator";
+
+    document.getElementById("membershipStatus").innerHTML =
+    "System Administrator";
+
+    document.getElementById("applyBtn").style.display =
+    "none";
+
+    document.getElementById("memberSection").style.display =
+    "none";
+
+    document.getElementById("adminSection").style.display =
+    "block";
+
+    return;
+}
+
+// MEMBER LOOKUP
+let member =
+members.find(m => m.username === username);
+
+if(member){
+
+    document.getElementById("welcomeText").innerHTML =
+    "👋 Hello " + username;
+
+    document.getElementById("membershipStatus").innerHTML =
+    "ACTIVE MEMBER";
+
+    document.getElementById("applyBtn").style.display =
+    "none";
+
+    document.getElementById("adminSection").style.display =
+    "none";
+
+    document.getElementById("memberSection").style.display =
+    "block";
+
+    document.getElementById("memberID").innerHTML =
+    member.id;
+
+    document.getElementById("memberBalance").innerHTML =
+    Number(member.balance || 0).toLocaleString();
+
+    localStorage.setItem(
+        "selectedMember",
+        member.id
+    );
+
+}else{
+
+    document.getElementById("welcomeText").innerHTML =
+    "👋 Hello " + username;
+
+    document.getElementById("adminSection").style.display =
+    "none";
+
+    document.getElementById("memberSection").style.display =
+    "none";
+
+    const requestQuery = query(
+        collection(db,"membershipRequests"),
+        where("username","==",username)
+    );
+
+    const requestSnapshot =
+    await getDocs(requestQuery);
+
+    if(!requestSnapshot.empty){
+
+        document.getElementById("membershipStatus").innerHTML =
+        "MEMBERSHIP APPLICATION PENDING";
+
+        document.getElementById("applyBtn").style.display =
+        "none";
+
+    }else{
+
+        document.getElementById("membershipStatus").innerHTML =
+        "NOT A MEMBER";
+
+        document.getElementById("applyBtn").style.display =
+        "block";
+}
+    }
+}
+window.loadDashboard = loadDashboard;
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadDashboard
+);
+</script>
+
+</body>
+</html>

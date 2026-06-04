@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Member Profile</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+
+
+.profile-card{
+background:white;
+padding:20px;
+border-radius:10px;
+text-align:center;
+margin-top:15px;
+box-shadow:0 0 5px rgba(0,0,0,.2);
+}
+
+.profile-card img{
+width:150px;
+height:150px;
+border-radius:50%;
+}
+
+.section{
+background:white;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+box-shadow:0 0 5px rgba(0,0,0,.2);
+}
+
+.transaction{
+padding:10px;
+margin-top:10px;
+background:#f9f9f9;
+border-left:5px solid green;
+border-radius:8px;
+}
+
+.action-row{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.action-row button,
+.action-row a{
+flex:1;
+}
+
+.receipt{
+border:2px dashed green;
+padding:15px;
+margin-top:10px;
+background:#fff;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<img src="log.jpg">
+
+<div class="header-text">
+
+<h1>
+THE CONQUERORS SAVINGS SACCO
+</h1>
+
+<h3>
+SAVE TOGETHER, GROW TOGETHER
+</h3>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<a href="member.html" class="btn back">
+BACK
+</a>
+
+<div class="profile-card">
+<img
+id="profileImage"
+src="log.jpg"
+style="
+width:150px;
+height:150px;
+border-radius:50%;
+object-fit:cover;
+">
+
+<h2 id="memberName">
+Loading...
+</h2>
+
+<p>
+<strong>Member ID:</strong>
+<span id="memberID"></span>
+</p>
+
+<p>
+<strong>Phone:</strong>
+<span id="memberPhone"></span>
+</p>
+
+<p>
+<strong>Balance:</strong>
+UGX <span id="memberBalance"></span>
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>Contact Member</h2>
+
+<div class="action-row">
+
+<a id="callBtn" class="btn">
+CALL
+</a>
+
+<a id="smsBtn" class="btn">
+SMS
+</a>
+
+<a id="whatsappBtn" class="btn">
+WHATSAPP
+</a>
+
+</div>
+<div id="adminControls"
+class="section"
+style="display:none;">
+
+<h2>Admin Financial Controls</h2>
+
+<input
+type="number"
+id="amount"
+placeholder="Amount">
+
+<button onclick="makeDeposit()">
+DEPOSIT
+</button>
+
+<button onclick="makeWithdrawal()">
+WITHDRAW
+</button>
+
+<h3>Profile Picture</h3>
+
+<input
+type="file"
+id="profileUpload"
+accept="image/*">
+
+<button onclick="updateProfilePicture()">
+UPDATE PHOTO
+</button>
+
+</div>
+<div id="membershipCard" class="receipt">
+
+<img src="log.jpg" width="80">
+
+<h3>
+THE CONQUERORS SAVINGS SACCO
+</h3>
+
+<p>
+SAVE TOGETHER, GROW TOGETHER
+</p>
+
+<p>
+Email: tcss2026@gmail.com
+</p>
+
+<hr>
+
+<p id="cardName"></p>
+
+<p id="cardID"></p>
+
+<p id="cardPhone"></p>
+
+</div>
+
+<div class="section">
+
+<h2>Transaction History</h2>
+
+<div id="transactions">
+No Transactions
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Latest Receipt</h2>
+
+<div id="receiptArea">
+No Receipt Generated
+</div>
+
+</div>
+
+</div>
+
+
+<a href="help.html" class="help-btn">
+❓
+</a>
+<footer>
+
+All Rights Reserved @ The Conquerors Savings Sacco
+
+<br>
+
+tcss2026@gmail.com
+
+</footer>
+
+<script type="module" src="script.js"></script>
+
+<script type="module">
+    
+    import {
+deposit,
+withdraw
+} from "./script.js";
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+let currentMember = null;
+async function loadProfile(){
+
+    let selectedID =
+    localStorage.getItem("selectedMember");
+
+    if(!selectedID){
+        alert("No Member Selected");
+        return;
+    }
+
+    const q = query(
+        collection(db,"members"),
+        where("id","==",selectedID)
+    );
+
+    const snapshot =
+    await getDocs(q);
+
+
+
+
+    if(snapshot.empty){
+
+        alert("Member Not Found");
+
+        window.location.href =
+        "dashboard.html";
+
+        return;
+    }
+
+    currentMember =
+    snapshot.docs[0].data();
+if(currentMember.profilePicture){
+
+    document.getElementById(
+        "profileImage"
+    ).src =
+    currentMember.profilePicture;
+
+}
+    document.getElementById("memberName").innerHTML =
+    currentMember.firstName + " " +
+    currentMember.secondName;
+
+    document.getElementById("memberID").innerHTML =
+    currentMember.id;
+
+    document.getElementById("memberPhone").innerHTML =
+    currentMember.phone;
+
+    document.getElementById("memberBalance").innerHTML =
+    Number(currentMember.balance || 0)
+    .toLocaleString();
+
+    document.getElementById("cardName").innerHTML =
+    "Name: " +
+    currentMember.firstName +
+    " " +
+    currentMember.secondName;
+
+    document.getElementById("cardID").innerHTML =
+    "Member ID: " +
+    currentMember.id;
+
+    document.getElementById("cardPhone").innerHTML =
+    "Phone: " +
+    currentMember.phone;
+
+    document.getElementById("callBtn").href =
+    "tel:" + currentMember.phone;
+
+    document.getElementById("smsBtn").href =
+    "sms:" + currentMember.phone;
+
+    document.getElementById("whatsappBtn").href =
+    "https://wa.me/" +
+    currentMember.phone.replace(/\+/g,"");
+
+    if(localStorage.getItem("currentRole") === "admin"){
+
+        document.getElementById(
+        "adminControls"
+        ).style.display = "block";
+
+    }
+
+    loadTransactions();
+}
+async function loadTransactions(){
+
+    const q = query(
+        collection(db,"transactions"),
+        where(
+            "memberID",
+            "==",
+            currentMember.id
+        )
+    );
+
+    const snapshot =
+    await getDocs(q);
+
+    let html = "";
+
+    if(snapshot.empty){
+
+        html = "No Transactions";
+
+    }else{
+
+        snapshot.forEach((doc)=>{
+
+           const t = doc.data();
+const id = doc.id;
+
+         html += `
+<div class="transaction">
+<strong>${t.type}</strong><br>
+Amount: UGX ${Number(t.amount).toLocaleString()}<br>
+Date: ${t.date}<br><br>
+
+${localStorage.getItem("currentRole") === "admin" ? `
+<button onclick="deleteTransaction('${id}')">
+🗑 DELETE
+</button>
+` : ""}
+
+</div>
+`;
+
+        });
+
+    }
+
+    document.getElementById(
+        "transactions"
+    ).innerHTML = html;
+
+}
+async function makeDeposit(){
+
+    let amount =
+    document.getElementById("amount").value;
+
+    if(!amount || amount <= 0){
+
+        alert("Enter valid amount");
+        return;
+
+    }
+
+    await deposit(currentMember.id, amount);
+
+    let receipt = `
+    <div class="receipt">
+    <h3>Deposit Receipt</h3>
+    <p>Name: ${currentMember.firstName} ${currentMember.secondName}</p>
+    <p>Member ID: ${currentMember.id}</p>
+    <p>Amount: UGX ${Number(amount).toLocaleString()}</p>
+    <p>Date: ${new Date().toLocaleString()}</p>
+    </div>
+    `;
+
+    document.getElementById("receiptArea")
+    .innerHTML = receipt;
+
+    await loadProfile();
+}
+
+async function makeWithdrawal(){
+
+    let amount =
+    document.getElementById("amount").value;
+
+    if(!amount || amount <= 0){
+
+        alert("Enter valid amount");
+        return;
+
+    }
+
+    if(Number(amount) >
+    Number(currentMember.balance)){
+
+        alert("Insufficient Balance");
+        return;
+
+    }
+
+    await withdraw(
+        currentMember.id,
+        amount
+    );
+
+    let receipt = `
+    <div class="receipt">
+    <h3>Withdrawal Receipt</h3>
+    <p>Name: ${currentMember.firstName} ${currentMember.secondName}</p>
+    <p>Member ID: ${currentMember.id}</p>
+    <p>Amount: UGX ${Number(amount).toLocaleString()}</p>
+    <p>Date: ${new Date().toLocaleString()}</p>
+    </div>
+    `;
+
+    document.getElementById(
+        "receiptArea"
+    ).innerHTML = receipt;
+
+    await loadProfile();
+
+}
+async function updateProfilePicture(){
+
+    let file =
+    document.getElementById("profileUpload").files[0];
+
+    if(!file){
+
+        alert("Select Image");
+        return;
+
+    }
+
+    let reader = new FileReader();
+
+    reader.onload = async function(e){
+
+        const q = query(
+            collection(db,"members"),
+            where("id","==",currentMember.id)
+        );
+
+        const snapshot =
+        await getDocs(q);
+
+        if(snapshot.empty){
+
+            alert("Member not found");
+            return;
+
+        }
+
+        const memberRef =
+        snapshot.docs[0].ref;
+
+        await updateDoc(memberRef,{
+            profilePicture:e.target.result
+        });
+
+        document.getElementById(
+            "profileImage"
+        ).src = e.target.result;
+
+        currentMember.profilePicture =
+        e.target.result;
+
+        alert(
+            "Profile Picture Updated Successfully"
+        );
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+async function deleteTransaction(transactionID){
+
+    if(localStorage.getItem("currentRole") !== "admin"){
+        alert("Only admin can delete transactions");
+        return;
+    }
+
+    if(!confirm("Delete this transaction?")){
+        return;
+    }
+
+    const transactionRef =
+    doc(db,"transactions",transactionID);
+
+    const transactionSnap =
+    await getDoc(transactionRef);
+
+    if(!transactionSnap.exists()){
+        alert("Transaction not found");
+        return;
+    }
+
+    const transaction =
+    transactionSnap.data();
+
+    const memberQuery = query(
+        collection(db,"members"),
+        where("id","==",transaction.memberID)
+    );
+
+    const memberSnap =
+    await getDocs(memberQuery);
+
+    if(!memberSnap.empty){
+
+        const memberRef =
+        memberSnap.docs[0].ref;
+
+        const memberData =
+        memberSnap.docs[0].data();
+
+        let newBalance =
+        Number(memberData.balance || 0);
+
+        if(transaction.type === "DEPOSIT"){
+            newBalance -= Number(transaction.amount);
+        }
+
+        if(transaction.type === "WITHDRAW"){
+            newBalance += Number(transaction.amount);
+        }
+
+        await updateDoc(memberRef,{
+            balance:newBalance
+        });
+    }
+
+    await deleteDoc(transactionRef);
+
+    alert("Transaction deleted and balance updated");
+
+    await loadProfile();
+}
+window.makeDeposit = makeDeposit;
+window.makeWithdrawal = makeWithdrawal;
+window.updateProfilePicture = updateProfilePicture;
+window.deleteTransaction = deleteTransaction;
+window.loadProfile = loadProfile;
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadProfile
+);
+
+</script>
+</body>
+</html>

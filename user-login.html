@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.login-card{
+max-width:400px;
+margin:30px auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+text-align:center;
+}
+
+.login-card h2{
+color:green;
+margin-bottom:20px;
+}
+
+.login-card input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+.login-card button{
+width:100%;
+margin-top:10px;
+}
+
+.logo{
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:10px;
+}
+
+.links{
+margin-top:15px;
+}
+
+.links a{
+display:block;
+margin-top:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+<header>
+
+<img src="log.jpg">
+
+<div class="header-text">
+
+<h1>
+THE CONQUERORS SAVINGS SACCO
+</h1>
+
+<h3>
+SAVE TOGETHER, GROW TOGETHER
+</h3>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="login-card">
+
+<img src="log.jpg" class="logo">
+
+<h2>User Login</h2>
+
+<input
+type="text"
+id="username"
+placeholder="Username">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<button
+type="button"
+id="toggleBtn"
+onclick="togglePassword()">
+SHOW PASSWORD
+</button>
+<button onclick="userLogin()">
+LOGIN
+</button>
+
+<div class="links">
+
+<a href="forgot-password.html">
+Forgot Password?
+</a>
+
+<a href="create-account.html">
+CREATE ACCOUNT
+</a>
+
+<a href="login.html">
+← BACK
+</a>
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div id="liveClock"></div>
+
+<hr>
+
+<div id="todayHistory">
+Loading today's historical event...
+</div>
+
+</div>
+
+<a href="help.html" class="help-btn">
+❓
+</a>
+
+<footer>
+
+All Rights Reserved @
+The Conquerors Savings Sacco
+
+<br>
+
+tcss2026@gmail.com
+
+</footer>
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
