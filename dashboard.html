@@ -9,7 +9,41 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+.mini-clock-card{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#111;
+color:white;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+}
 
+/* LEFT SIDE */
+.clock-left{
+flex:1;
+}
+
+.clock-left #clock{
+font-size:28px;
+font-weight:bold;
+}
+
+/* RIGHT SIDE (ANALOG CLOCK) */
+.clock-right{
+width:70px;
+height:70px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* FORCE CANVAS SIZE */
+#analogClock{
+width:70px !important;
+height:70px !important;
+}
 .status-box{
 background:white;
 padding:15px;
@@ -64,6 +98,23 @@ SAVE TOGETHER, GROW TOGETHER
 <p id="welcomeText">
 Loading...
 </p>
+
+<!-- CLOCK INSIDE WELCOME -->
+<div class="mini-clock-card">
+
+  <div class="clock-left">
+    <div id="clock">00:00</div>
+    <div class="clock-location">Kampala, Uganda</div>
+  </div>
+
+  <div class="clock-right">
+    <canvas id="analogClock"></canvas>
+  </div>
+
+</div>
+<div class="clock-right">
+  <canvas id="analogClock" width="80" height="80"></canvas>
+</div>
 
 </div>
 
@@ -333,7 +384,85 @@ document.addEventListener(
     "DOMContentLoaded",
     loadDashboard
 );
-</script>
 
+// DIGITAL CLOCK
+function updateClock(){
+const now = new Date();
+
+const time = now.toLocaleTimeString('en-UG',{
+hour:'2-digit',
+minute:'2-digit'
+});
+
+document.getElementById("clock").innerHTML = time;
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+
+// ANALOG CLOCK
+const canvas = document.getElementById("analogClock");
+canvas.width = 70;
+canvas.height = 70;
+const ctx = canvas.getContext("2d");;
+
+function drawClock(){
+const now = new Date();
+const radius = canvas.height / 2;
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.translate(radius, radius);
+
+// circle
+ctx.beginPath();
+ctx.arc(0,0,radius-2,0,2*Math.PI);
+ctx.fillStyle = "#222";
+ctx.fill();
+
+// numbers
+ctx.fillStyle = "white";
+ctx.font = radius*0.15 + "px Arial";
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+
+for(let num=1; num<=12; num++){
+let ang = num * Math.PI / 6;
+ctx.rotate(ang);
+ctx.translate(0, -radius*0.8);
+ctx.rotate(-ang);
+ctx.fillText(num.toString(),0,0);
+ctx.rotate(ang);
+ctx.translate(0, radius*0.8);
+ctx.rotate(-ang);
+}
+
+// hands
+const hour = now.getHours()%12;
+const minute = now.getMinutes();
+const second = now.getSeconds();
+
+drawHand((hour*Math.PI/6)+(minute*Math.PI/(6*60)), radius*0.5, 4);
+drawHand(minute*Math.PI/30, radius*0.7, 3);
+drawHand(second*Math.PI/30, radius*0.8, 1, "red");
+
+ctx.setTransform(1,0,0,1,0,0);
+}
+
+function drawHand(pos, length, width, color="white"){
+ctx.beginPath();
+ctx.lineWidth = width;
+ctx.lineCap = "round";
+ctx.strokeStyle = color;
+ctx.moveTo(0,0);
+ctx.rotate(pos);
+ctx.lineTo(0,-length);
+ctx.stroke();
+ctx.rotate(-pos);
+}
+
+setInterval(drawClock,1000);
+
+</script>
 </body>
 </html>

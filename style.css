@@ -1,285 +1,311 @@
-..info-card{
-background:white;
-padding:20px;
-margin-top:15px;
-border-radius:12px;
-border-left:6px solid green;
-box-shadow:0 3px 10px rgba(0,0,0,.15);
+/* ===== GLOBAL FIX ===== */
+* {
+  box-sizing: border-box;
 }
 
-#liveClockCard{
-padding:30px;
-border-radius:20px;
-text-align:center;
-transition:all .8s ease;
-box-shadow:0 5px 20px rgba(0,0,0,.3);
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-#todayHistory{
-margin-top:12px;
-padding:15px;
-background:#f8f8f8;
-border-radius:8px;
-border:1px solid #ddd;
-font-size:14px;
-line-height:1.7;
-color:#222;
-}
-
-#todayHistory strong{
-color:green;
-}
+/* ===== BODY ===== */
 body {
-    background: #D2691E;
-}
-header{
-    background:white;
-    padding:15px 20px;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    border-bottom:5px solid green;
-    box-shadow:0 2px 10px rgba(0,0,0,.1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #D2691E; /* fixed */
+  font-family: Arial, sans-serif;
 }
 
-header img{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid green;
-    background:white;
+/* ===== CONTAINER ===== */
+.container {
+  flex: 1;
+  padding: 10px;
 }
 
-.header-text{
-    flex:1;
+/* ===== HEADER ===== */
+header {
+  background: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 5px solid green;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  flex-wrap: wrap; /* fix mobile */
 }
 
-.header-text h1{
-    margin:0;
-    color:green;
-    font-size:30px;
-    font-weight:bold;
-    line-height:1.1;
+header img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid green;
+  background: white;
 }
 
-.header-text h3{
-    margin-top:10px;
-    color:#555;
-    font-size:18px;
-    font-weight:bold;
+.header-text {
+  flex: 1;
 }
 
+.header-text h1 {
+  margin: 0;
+  color: green;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+
+.header-text h3 {
+  margin-top: 8px;
+  color: #555;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* ===== RESPONSIVE HEADER ===== */
 @media(max-width:600px){
+  header {
+    padding: 10px;
+  }
 
-header{
-    padding:10px;
+  header img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .header-text h1 {
+    font-size: 20px;
+  }
+
+  .header-text h3 {
+    font-size: 13px;
+  }
 }
 
-header img{
-    width:80px;
-    height:80px;
+/* ===== CARDS ===== */
+.card {
+  background: linear-gradient(135deg, #FFD700, #F7B500, #E6A800);
+  padding: 20px;
+  margin: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+  text-align: center;
 }
 
-.header-text h1{
-    font-size:22px;
+/* ===== INFO CARD ===== */
+.info-card {
+  background: white;
+  padding: 20px;
+  margin-top: 15px;
+  border-radius: 12px;
+  border-left: 6px solid green;
+  box-shadow: 0 3px 10px rgba(0,0,0,.15);
 }
 
-.header-text h3{
-    font-size:14px;
+/* ===== CLOCK CARD ===== */
+#liveClockCard {
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  transition: all .5s ease;
+  box-shadow: 0 5px 20px rgba(0,0,0,.3);
 }
 
-}
-.card{
-    background: linear-gradient(
-        135deg,
-        #87CEEB,
-        #4FC3F7,
-        #00BFFF,
-        #87CEEB
-    );
-
-    background-size: 400% 400%;
-
-    animation: gradientMove 8s ease infinite;
-
-    padding:20px;
-    border-radius:20px;
-
-    color:white;
-    text-align:center;
-
-    box-shadow:
-    0 0 10px #87CEEB,
-    0 0 20px #87CEEB,
-    0 0 40px #4FC3F7,
-    0 0 60px #00BFFF;
-
-    transition:0.4s;
-
-    position:relative;
-    overflow:hidden;
+/* ===== TODAY HISTORY ===== */
+#todayHistory {
+  margin-top: 12px;
+  padding: 15px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #222;
 }
 
-.card:hover{
-
-    transform:
-    translateY(-10px)
-    scale(1.03);
-
-    box-shadow:
-    0 0 20px #87CEEB,
-    0 0 40px #4FC3F7,
-    0 0 80px #00BFFF,
-    0 0 120px #87CEEB;
+#todayHistory strong {
+  color: green;
 }
 
-.card{
-
-   background: linear-gradient(
-    135deg,
-    #FFD700,
-    #F7B500,
-    #E6A800
-);
-
-    padding:20px;
-
-    margin:20px;
-
-    border-radius:15px;
-
-    box-shadow:
-    0 0 10px rgba(0,0,0,.15);
-
-}
-
+/* ===== BUTTONS ===== */
 button,
 .btn {
-    display: block;
-    width: 100%;
-    background: green;
-    color: white;
-    text-decoration: none;
-    text-align: center;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
+  display: block;
+  width: 100%;
+  background: green;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
 .back {
-    background: orange;
+  background: orange;
 }
 
+/* ===== FOOTER ===== */
 footer {
-    background: black;
-    color: white;
-    text-align: center;
-    padding: 15px;
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
 }
 
+/* ===== MEMBER PHOTO ===== */
 .member-photo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    display: block;
-    margin: auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }
 
+/* ===== GRAPH ===== */
 .graph {
-    height: 150px;
-    background: linear-gradient(to top, green, lightgreen);
-    border-radius: 10px;
+  height: 150px;
+  background: linear-gradient(to top, green, lightgreen);
+  border-radius: 10px;
 }
 
+/* ===== TABLE ===== */
 .table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .table th,
 .table td {
-    border: 1px solid #ddd;
-    padding: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+/* ===== MEMBERS GRID ===== */
+#membersList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* ===== FLOATING HELP BUTTON ===== */
+.help-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #00c853;
+  color: white;
+  font-size: 30px;
+  text-decoration: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,.3);
+  z-index: 9999;
+  animation: pulse 2s infinite;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+
+
+
+
+
+/* Fix clock visibility */
+#liveClock {
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Make ALL text inside visible */
+#liveClock * {
+  color: #ffffff !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Improve card contrast */
+.info-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add dark overlay to improve readability */
+.info-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35); /* dark overlay */
+  z-index: 0;
+}
+
+/* Keep content above overlay */
+#liveClock,
+#todayHistory {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+/* FIX CLOCK CARD VISIBILITY */
+#liveClockCard {
+    margin: 20px;
+    padding: 25px;
+    border-radius: 20px;
     text-align: center;
+    background: linear-gradient(135deg, #2196F3, #0D47A1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    color: white;
 }
 
-
-#membersList{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
+/* MAKE SURE CLOCK TEXT IS ALWAYS VISIBLE */
+#liveClock {
+    color: #ffffff;
+    z-index: 10;
+    position: relative;
 }
 
-
-
-
-
-.help-btn{
-position:fixed;
-bottom:20px;
-right:20px;
-width:60px;
-height:60px;
-background:#00c853;
-color:white;
-font-size:30px;
-text-decoration:none;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 5px 15px rgba(0,0,0,.3);
-z-index:9999;
-animation:pulse 2s infinite;
+/* FIX TIME DISPLAY */
+#liveClock span {
+    color: #ffffff !important;
+    font-weight: bold;
 }
 
-@keyframes pulse{
-
-0%{
-transform:scale(1);
+/* FIX DATE TEXT */
+#liveClock div {
+    color: #ffffff;
 }
 
-50%{
-transform:scale(1.1);
+/* FIX INFO CARD CONTAINER */
+.info-card {
+    background: transparent;
+    padding: 10px;
 }
 
-100%{
-transform:scale(1);
+/* PREVENT OVERLAP */
+body {
+    overflow-x: hidden;
 }
 
-}
-
-
-
-
-
-
-
-
-
-html,
-body{
-    height:100%;
-    margin:0;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    background: sky blue;
-}
-
-.container{
-    flex:1;
-}
-
-footer{
-    background:black;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:auto;
+/* OPTIONAL: ADD SPACE SO IT DOESN’T GET COVERED */
+#liveClockCard {
+    margin-top: 20px;
 }

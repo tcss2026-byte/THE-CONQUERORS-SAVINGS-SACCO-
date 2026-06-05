@@ -1,40 +1,35 @@
-<!DOCTYPE html> <html> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Help Center</title> <link rel="stylesheet" href="style.css"> <style> .section{ background:white; padding:20px; margin-top:15px; border-radius:10px; box-shadow:0 0 5px rgba(0,0,0,.2); } .section h2{ color:green; margin-bottom:10px; } .section p, .section li{ line-height:1.7; } .section ul{ padding-left:20px; } </style> </head> <body> <header style="
-background:#ffffff;
-padding:15px;
-display:flex;
-align-items:center;
-gap:15px;
-box-shadow:0 2px 8px rgba(0,0,0,.15);
-border-bottom:4px solid green;
-">
+<!DOCTYPE html> <html> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Help Center</title> <link rel="stylesheet" href="style.css"> <style>
+    
+    
+    /* All links */
+a {
+  text-decoration: none;   /* remove underline */
+  color: #707070;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-<img src="log.jpg" style="
-width:80px;
-height:80px;
-border-radius:50%;
-object-fit:cover;
-border:2px solid green;
-">
+/* Hover effect */
+a:hover {
+  color: white;
+  background: green;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+    
+     .section{ background:white; padding:20px; margin-top:15px; border-radius:10px; box-shadow:0 0 5px rgba(0,0,0,.2); } .section h2{ color:green; margin-bottom:10px; } .section p, .section li{ line-height:1.7; } .section ul{ padding-left:20px; } </style> </head> <body> <header>
 
-<div>
+<img src="log.jpg">
 
-<h1 style="
-margin:0;
-font-size:22px;
-color:green;
-line-height:1.2;
-">
+<div class="header-text">
+
+<h1>
 THE CONQUERORS SAVINGS SACCO
 </h1>
 
-<p style="
-margin:5px 0 0;
-font-size:14px;
-color:#555;
-font-weight:bold;
-">
+<h3>
 SAVE TOGETHER, GROW TOGETHER
-</p>
+</h3>
 
 </div>
 
@@ -54,32 +49,13 @@ font-weight:bold;
 🏠 BACK TO HOME
 </a>
 
-<div style="
-background:#111;
-color:white;
-padding:20px;
-margin:15px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,.2);
-">
-
-<div id="liveClock"></div>
-
-</div>
-
-<hr>
-
-<div id="todayHistory"
-style="
-background:white;
-padding:20px;
-margin:15px;
-border-radius:15px;
-box-shadow:0 3px 10px rgba(0,0,0,.15);
-border-left:6px solid green;
-font-size:17px;
-line-height:1.6;
-">
-Loading today's historical event...
-</div><div class="section"> <h2>Welcome to the Help Center</h2> <p> Welcome to The Conquerors Savings Sacco Management System. This platform helps members and administrators manage savings, membership applications, transactions and communication efficiently. </p> </div> <div class="section"> <h2>1. Creating an Account</h2> <p>To use the system, you must first create an account.</p> <ul> <li>Open the Login Page.</li> <li>Click Create Account.</li> <li>Enter First Name.</li> <li>Enter Second Name.</li> <li>Enter Phone Number.</li> <li>Create Username.</li> <li>Create Password.</li> <li>Confirm Password.</li> <li>Click Create Account.</li> </ul> </div> <div class="section"> <h2>2. User Login</h2> <ul> <li>Enter Username.</li> <li>Enter Password.</li> <li>Click Login.</li> </ul> <p> After successful login, you will be redirected to the Dashboard. </p> </div> <div class="section"> <h2>3. Applying for Membership</h2> <p> Creating an account does not automatically make you a member. </p> <ul> <li>Login to your account.</li> <li>Open Dashboard.</li> <li>Click Apply for Membership.</li> <li>Wait for Administrator approval.</li> </ul> </div> <div class="section"> <h2>4. Membership Approval</h2> <p> Only Administrators can approve or reject membership applications. </p> <ul> <li>Review applications.</li> <li>Approve applications.</li> <li>Reject applications.</li> <li>Generate Member IDs.</li> <li>Create Member Accounts.</li> </ul> </div> <div class="section"> <h2>5. Searching Members</h2> <p> Administrators can search members using: </p> <ul> <li>Member Name.</li> <li>Phone Number.</li> <li>Member ID.</li> </ul> </div> <div class="section"> <h2>6. Member Profiles</h2> <p> Each member profile contains: </p> <ul> <li>Profile Picture.</li> <li>Full Name.</li> <li>Member ID.</li> <li>Phone Number.</li> <li>Current Balance.</li> <li>Transaction History.</li> <li>Latest Receipt.</li> </ul> </div> <div class="section"> <h2>7. Deposits</h2> <p> Administrators can record deposits. </p> <ul> <li>Open Member Profile.</li> <li>Enter Amount.</li> <li>Click Deposit.</li> </ul> <p> The balance is automatically updated and a receipt is generated. </p> </div> <div class="section"> <h2>8. Withdrawals</h2> <p> Administrators can record withdrawals. </p> <ul> <li>Open Member Profile.</li> <li>Enter Amount.</li> <li>Click Withdraw.</li> </ul> <p> Withdrawals cannot exceed the available balance. </p> </div> <div class="section"> <h2>9. Transaction History</h2> <p> Every deposit and withdrawal is stored automatically. </p> <p> Transaction records contain: </p> <ul> <li>Transaction Type.</li> <li>Amount.</li> <li>Date and Time.</li> <li>Member ID.</li> </ul> </div> <div class="section"> <h2>10. Receipts</h2> <p> A receipt is generated after every transaction. </p> <p> Each receipt contains: </p> <ul> <li>Member Name.</li> <li>Member ID.</li> <li>Transaction Type.</li> <li>Amount.</li> <li>Date and Time.</li> </ul> </div> <div class="section"> <h2>11. Profile Pictures</h2> <p> Administrators can upload and update member profile pictures. </p> <ul> <li>Open Member Profile.</li> <li>Select Image.</li> <li>Click Update Photo.</li> </ul> </div> <div class="section"> <h2>12. Contacting Members</h2> <p> The system allows direct communication through: </p> <ul> <li>Phone Calls.</li> <li>SMS Messages.</li> <li>WhatsApp Messages.</li> </ul> </div> <div class="section"> <h2>13. Deleting Transactions</h2> <p> Only Administrators can delete transactions. </p> <p> When a transaction is deleted: </p> <ul> <li>The transaction record is removed.</li> <li>The member balance is adjusted automatically.</li> </ul> </div> <div class="section"> <h2>14. Deleting Members</h2> <p> Only Administrators can permanently delete members. </p> <p> Deleting a member removes: </p> <ul> <li>Member Record.</li> <li>User Account.</li> <li>Membership Request.</li> <li>Transaction History.</li> </ul> <p> This action cannot be reversed. </p> </div> <div class="section"> <h2>15. Administrator Functions</h2> <ul> <li>Approve Memberships.</li> <li>Reject Memberships.</li> <li>Manage Members.</li> <li>Make Deposits.</li> <li>Make Withdrawals.</li> <li>Delete Transactions.</li> <li>Delete Members.</li> <li>Update Profile Photos.</li> </ul> </div> <div class="section"> <h2>16. Security Guidelines</h2> <ul> <li>Never share your password.</li> <li>Always logout after use.</li> <li>Use strong passwords.</li> <li>Keep Administrator credentials confidential.</li> <li>Protect member information.</li> </ul> </div> <div class="section"> <h2>17. Frequently Asked Questions</h2> <p><strong>Q: Can I become a member immediately after creating an account?</strong></p> <p>A: No. You must first apply for membership and wait for approval.</p> <p><strong>Q: Who can make deposits and withdrawals?</strong></p> <p>A: Only Administrators.</p> <p><strong>Q: Can deleted transactions be recovered?</strong></p> <p>A: No. Deleted transactions are permanently removed.</p> <p><strong>Q: Can I update my profile picture?</strong></p> <p>A: Yes, through the member profile page.</p> </div> <div class="section"> <h2>Support & Contact Information</h2> <p> For technical support or inquiries: </p> <p> <strong>Email:</strong><br> tcss2026@gmail.com </p> <p> <strong>Organization:</strong><br> THE CONQUERORS SAVINGS SACCO </p> <p> <strong>Motto:</strong><br> SAVE TOGETHER, GROW TOGETHER </p> </div> </div> <footer> All Rights Reserved @ The Conquerors Savings Sacco <br> tcss2026@gmail.com </footer><script type="module" src="script.js"></script> </body> </html> 
+<div></div>
+<!-- ✅ FIXED CLOCK SECTION -->
+<div id="liveClockCard">
+  <div id="liveClock"></div>
+  <hr>
+  <div id="todayHistory">
+    Loading today's historical event...
+  </div>
+</div></div>
+<div class="section"> <h2>Welcome to the Help Center</h2> <p> Welcome to The Conquerors Savings Sacco Management System. This platform helps members and administrators manage savings, membership applications, transactions and communication efficiently. </p> </div> <div class="section"> <h2>1. Creating an Account</h2> <p>To use the system, you must first create an account.</p> <ul> <li>Open the Login Page.</li> <li>Click Create Account.</li> <li>Enter First Name.</li> <li>Enter Second Name.</li> <li>Enter Phone Number.</li> <li>Create Username.</li> <li>Create Password.</li> <li>Confirm Password.</li> <li>Click Create Account.</li> </ul> </div> <div class="section"> <h2>2. User Login</h2> <ul> <li>Enter Username.</li> <li>Enter Password.</li> <li>Click Login.</li> </ul> <p> After successful login, you will be redirected to the Dashboard. </p> </div> <div class="section"> <h2>3. Applying for Membership</h2> <p> Creating an account does not automatically make you a member. </p> <ul> <li>Login to your account.</li> <li>Open Dashboard.</li> <li>Click Apply for Membership.</li> <li>Wait for Administrator approval.</li> </ul> </div> <div class="section"> <h2>4. Membership Approval</h2> <p> Only Administrators can approve or reject membership applications. </p> <ul> <li>Review applications.</li> <li>Approve applications.</li> <li>Reject applications.</li> <li>Generate Member IDs.</li> <li>Create Member Accounts.</li> </ul> </div> <div class="section"> <h2>5. Searching Members</h2> <p> Administrators can search members using: </p> <ul> <li>Member Name.</li> <li>Phone Number.</li> <li>Member ID.</li> </ul> </div> <div class="section"> <h2>6. Member Profiles</h2> <p> Each member profile contains: </p> <ul> <li>Profile Picture.</li> <li>Full Name.</li> <li>Member ID.</li> <li>Phone Number.</li> <li>Current Balance.</li> <li>Transaction History.</li> <li>Latest Receipt.</li> </ul> </div> <div class="section"> <h2>7. Deposits</h2> <p> Administrators can record deposits. </p> <ul> <li>Open Member Profile.</li> <li>Enter Amount.</li> <li>Click Deposit.</li> </ul> <p> The balance is automatically updated and a receipt is generated. </p> </div> <div class="section"> <h2>8. Withdrawals</h2> <p> Administrators can record withdrawals. </p> <ul> <li>Open Member Profile.</li> <li>Enter Amount.</li> <li>Click Withdraw.</li> </ul> <p> Withdrawals cannot exceed the available balance. </p> </div> <div class="section"> <h2>9. Transaction History</h2> <p> Every deposit and withdrawal is stored automatically. </p> <p> Transaction records contain: </p> <ul> <li>Transaction Type.</li> <li>Amount.</li> <li>Date and Time.</li> <li>Member ID.</li> </ul> </div> <div class="section"> <h2>10. Receipts</h2> <p> A receipt is generated after every transaction. </p> <p> Each receipt contains: </p> <ul> <li>Member Name.</li> <li>Member ID.</li> <li>Transaction Type.</li> <li>Amount.</li> <li>Date and Time.</li> </ul> </div> <div class="section"> <h2>11. Profile Pictures</h2> <p> Administrators can upload and update member profile pictures. </p> <ul> <li>Open Member Profile.</li> <li>Select Image.</li> <li>Click Update Photo.</li> </ul> </div> <div class="section"> <h2>12. Contacting Members</h2> <p> The system allows direct communication through: </p> <ul> <li>Phone Calls.</li> <li>SMS Messages.</li> <li>WhatsApp Messages.</li> </ul> </div> <div class="section"> <h2>13. Deleting Transactions</h2> <p> Only Administrators can delete transactions. </p> <p> When a transaction is deleted: </p> <ul> <li>The transaction record is removed.</li> <li>The member balance is adjusted automatically.</li> </ul> </div> <div class="section"> <h2>14. Deleting Members</h2> <p> Only Administrators can permanently delete members. </p> <p> Deleting a member removes: </p> <ul> <li>Member Record.</li> <li>User Account.</li> <li>Membership Request.</li> <li>Transaction History.</li> </ul> <p> This action cannot be reversed. </p> </div> <div class="section"> <h2>15. Administrator Functions</h2> <ul> <li>Approve Memberships.</li> <li>Reject Memberships.</li> <li>Manage Members.</li> <li>Make Deposits.</li> <li>Make Withdrawals.</li> <li>Delete Transactions.</li> <li>Delete Members.</li> <li>Update Profile Photos.</li> </ul> </div> <div class="section"> <h2>16. Security Guidelines</h2> <ul> <li>Never share your password.</li> <li>Always logout after use.</li> <li>Use strong passwords.</li> <li>Keep Administrator credentials confidential.</li> <li>Protect member information.</li> </ul> </div> <div class="section"> <h2>17. Frequently Asked Questions</h2> <p><strong>Q: Can I become a member immediately after creating an account?</strong></p> <p>A: No. You must first apply for membership and wait for approval.</p> <p><strong>Q: Who can make deposits and withdrawals?</strong></p> <p>A: Only Administrators.</p> <p><strong>Q: Can deleted transactions be recovered?</strong></p> <p>A: No. Deleted transactions are permanently removed.</p> <p><strong>Q: Can I update my profile picture?</strong></p> <p>A: Yes, through the member profile page.</p> </div> <div class="section"> <h2>Support & Contact Information</h2> <p> For technical support or inquiries: </p> <p> <strong>Email:</strong><br> <a href="mailto:tcss2026@gmail.com">tcss2026@gmail.com</a> </p> <p><strong>Developer</strong><br><a href="about-developer.html">Developer<br>SYATHOMEKWA BENSONS JOY</a></p><p> <strong>Organization:</strong><br> THE CONQUERORS SAVINGS SACCO </p> <p> <strong>Motto:</strong><br> SAVE TOGETHER, GROW TOGETHER </p> </div> </div> <footer> All Rights Reserved @ The Conquerors Savings Sacco <br> tcss2026@gmail.com </footer><script type="module" src="script.js"></script> </body> </html> 
