@@ -7,6 +7,9 @@
 
   <link rel="stylesheet" href="style.css">
 
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#008000">
   <style>
 
   body{
@@ -348,6 +351,11 @@ function toggleMenu(){
   let menu = document.getElementById("aboutMenu");
   menu.style.display =
     menu.style.display === "block" ? "none" : "block";
+}
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 </script>
 
